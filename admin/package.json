@@ -11,6 +11,7 @@
     "egg-scripts": "^2.11.0"
   },
   "devDependencies": {
+    "@types/node": "^16.9.1",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
     "egg-bin": "^4.11.0",
@@ -23,9 +24,9 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-admin",
+    "start": "egg-scripts start --daemon --title=egg-server-admin  --port 7001",
     "stop": "egg-scripts stop --title=egg-server-admin",
-    "dev": "egg-bin dev",
+    "dev": "egg-bin dev  --port 7001",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
