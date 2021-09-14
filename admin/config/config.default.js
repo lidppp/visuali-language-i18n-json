@@ -1,7 +1,6 @@
 /* eslint valid-jsdoc: "off" */
-
-'use strict';
-
+const path = require('path');
+const fs = require('fs');
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -17,10 +16,10 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [];
-
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    jsonPath: path.join(__dirname, '../jsonfile'),
   };
 
   return {
