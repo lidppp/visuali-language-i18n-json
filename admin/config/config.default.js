@@ -1,6 +1,5 @@
 /* eslint valid-jsdoc: "off" */
 const path = require('path');
-const fs = require('fs');
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -15,11 +14,12 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1631544392706_5530';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = [ 'fileDirExists', 'operationLog' ];
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
     jsonPath: path.join(__dirname, '../jsonfile'),
+    logPath: path.join(__dirname, '../operationLog'),
   };
 
   return {
