@@ -1,9 +1,7 @@
 const fs = require('fs');
 
 function appendFile(path, content = '') {
-  try {
-    fs.accessSync(path);
-  } catch (err) {
+  if (!hasFile(path)) {
     createFile(path);
   }
 
@@ -15,13 +13,8 @@ function appendFile(path, content = '') {
 }
 
 function copyFile(oldPath, newPath) {
-  fs.copyFileSync(oldPath, newPath, function(err) {
-    if (err) {
-      console.log('something wrong was happened');
-    } else {
-      console.log('copy file succeed');
-    }
-  });
+  console.log(oldPath, newPath);
+  fs.copyFileSync(oldPath, newPath);
 }
 
 function createFile(path, baseStr = '') {
@@ -38,10 +31,29 @@ function readFile(path) {
   return fs.readFileSync(path).toString();
 }
 
+function hasFile(path) {
+  try {
+    fs.accessSync(path);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+function writeFile(path, content) {
+  try {
+    fs.writeFileSync(path, content);
+  } catch (err) {
+    console.log(err);
+
+  }
+}
 
 module.exports = {
   appendFile,
   copyFile,
   createFile,
   readFile,
+  hasFile,
+  writeFile,
 };

@@ -15,6 +15,20 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [ 'fileDirExists', 'operationLog' ];
+
+  // 配置跨域
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
+
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+    domainWhiteList: [ '*' ], // 允许访问接口的白名单，例如：http://localhost:8080 *表示均可访问
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
