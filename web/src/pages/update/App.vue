@@ -27,6 +27,9 @@
             <el-button type="primary" @click="handleExport">
               导出
             </el-button>
+            <el-button type="primary" @click="handleUpload">
+              上传
+            </el-button>
           </el-button-group>
         </el-col>
         <el-col :span="12" class="text-right">
@@ -139,11 +142,9 @@ export default {
       this.languages.forEach(lang => {
         json[lang] = this.list.reduce((p, c) => {
           let m = c.getLang(lang)
-
           return Object.assign(p, m)
         }, {})
       })
-
       return JSON.stringify(json)
     }
   },
@@ -230,15 +231,19 @@ export default {
     },
     parseJson(json) {
       // 先解析出语言
-      this.languages = Object.keys(json)
+      let languages = Object.keys(json)
 
       let values = Object.values(json)
 
       // 从第一个语言提取出结构来
       let firstLanguage = values[0]
-      this.list = Object.keys(firstLanguage).map(
+      let list = Object.keys(firstLanguage).map(
           key => new Node(key, firstLanguage[key], json)
       )
+      this.$nextTick(()=>{
+        this.languages = languages
+        this.list = list
+      })
     },
     // 复制文字
     copyText(text) {
@@ -273,7 +278,6 @@ export default {
       this.addKey()
     },
     handleCellDbClick(row, column, cell, event) {
-      console.log(row, column)
 
       if (column.property === 'key') {
         this.$prompt('请输入新的节点名', '修改', {
@@ -306,6 +310,11 @@ export default {
         }
       }
     },
+
+    // 上传至服务器
+    handleUpload(){
+      console.log(this.formatText)
+    }
   }
 }
 </script>

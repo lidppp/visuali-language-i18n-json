@@ -11,38 +11,35 @@ function getProperty (obj, path) {
 }
 
 export default class Node {
-  constructor (key, value, json) {
+  constructor (key, value, json, parent) {
     this.key = key
     this.children = []
-
+    parent && (this.parent = parent)
     if (typeof value === 'object') {
       Object.keys(value).forEach(k => {
-        this.append(new Node(k, value[k], json))
+        this.append(new Node(k, value[k], json,this))
       })
     }
-
     this.languages = {}
-
     if (json) {
-      setTimeout(() => {
-        this.languages = Object.keys(json).reduce((p, c) => {
-          let messages = json[c]
-          // 获取到当前路径的值
-          p[c] = getProperty(messages, this.fullPath)
-          return p
-        }, {})
-      }, 0)
+      this.languages = Object.keys(json).reduce((p, c) => {
+        let messages = json[c]
+        // 获取到当前路径的值
+        p[c] = getProperty(messages, this.fullPath)
+        return p
+      }, {})
     }
   }
 
   getLang (lang) {
     let message = {}
-
     if (this.children.length) {
       message[this.key] = this.children.reduce((p, c) => {
         return Object.assign(p, c.getLang(lang))
       }, {})
-    } else message[this.key] = this.languages[lang]
+    } else {
+      message[this.key] = this.languages[lang]
+    }
 
     return message
   }

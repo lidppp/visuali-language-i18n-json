@@ -1,7 +1,7 @@
 import {createRouter,createWebHashHistory} from "vue-router"
 
 const routes = [
-  {path:"/",component: import("@/App.vue")},
+  {path:"/", redirect:"/update"},
   {path:"/update",component: import("@/pages/update/App.vue")}
 ]
 
